@@ -1,5 +1,7 @@
 # WebUpdateChecker
 
+[![Build Status](https://travis-ci.org/matsubo/web_update_checker.png?branch=master)](https://travis-ci.org/matsubo/web_update_checker)
+
 This library polls an URL and notifies if the contents is changed.
 This is useful if you want to be notified as soon as a web site contents is changed.
 
