@@ -1,6 +1,7 @@
 # WebUpdateChecker
 
 [![Build Status](https://travis-ci.org/matsubo/web_update_checker.png?branch=master)](https://travis-ci.org/matsubo/web_update_checker)
+[![Code Climate](https://codeclimate.com/repos/52fe140a6956801926004d67/badges/30ffdfe2a271ee8955b9/gpa.png)](https://codeclimate.com/repos/52fe140a6956801926004d67/feed)
 
 This library polls an URL and notifies if the contents is changed.
 This is useful if you want to be notified as soon as a web site contents is changed.
