@@ -60,12 +60,12 @@ describe WebUpdateChecker do
   end
 
 
-  it 'should be send a notification mail' do
-
-    WebUpdateChecker::Checker.new(@url, @regex, @mail).execute.should be_true
-
-  end
-
+#  it 'should be send a notification mail' do
+#
+#    WebUpdateChecker::Checker.new(@url, @regex, @mail).execute.should be_true
+#
+#  end
+#
 
   after(:all) do
   end
