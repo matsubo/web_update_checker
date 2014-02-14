@@ -8,14 +8,18 @@ require 'fileutils'
 # gem
 require 'mail'
 
+
+#
+# Web Update Checker
+#
 module WebUpdateChecker
 
   class Checker
 
     #
     # @param [String] url to Checker
-    # @param [Regex] Regex of to match comparing text
-    # @param [Mail] instance of Mail
+    # @param [Regexp] regex of to match comparing text
+    # @param [Mail] mail instance
     #
     def initialize(url, regex = nil, mail = nil)
       @url  = url
@@ -26,6 +30,8 @@ module WebUpdateChecker
     end
 
 
+    #
+    # Compare with previous data
     #
     # @param [Bool] true if changed, false if no change, nil if first time.
     #
@@ -84,10 +90,13 @@ module WebUpdateChecker
     end
 
 
-  def cleanup
-    File.unlink(@tmp_file_last)    if File.exists?(@tmp_file_last)
-    File.unlink(@tmp_file_current) if File.exists?(@tmp_file_current)
-  end
+    #
+    # Cleanup temporary File
+    #
+    def cleanup
+      File.unlink(@tmp_file_last)    if File.exists?(@tmp_file_last)
+      File.unlink(@tmp_file_current) if File.exists?(@tmp_file_current)
+    end
 
 
   end
