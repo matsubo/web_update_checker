@@ -26,8 +26,6 @@ Or install it yourself as:
 
 main.rb
 ```
-url = 'http://matsu.teraren.com/blog/'
-
 regex = /<h1>(.*)<\/h1>/
 
 mail = Mail.new do
@@ -41,7 +39,6 @@ mail.delivery_method :smtp, {
 address:   'localhost',
              port:      25,
 }
-
 
 url = 'http://example.com/'
 WebUpdateChecker::Checker.new(url, regex, mail).execute
