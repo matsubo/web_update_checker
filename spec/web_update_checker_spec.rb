@@ -47,7 +47,7 @@ describe WebUpdateChecker do
 
   it 'should be return as same contents' do
 
-    WebUpdateChecker::Checker.new(@url).execute.should be_false
+    WebUpdateChecker::Checker.new(@url).execute.should be_falsey
 
   end
 
@@ -55,7 +55,7 @@ describe WebUpdateChecker do
   it 'should be return as different contents' do
 
     url = 'http://www.yahoo.co.jp/'
-    WebUpdateChecker::Checker.new(url).execute.should be_true
+    WebUpdateChecker::Checker.new(url).execute.should be_truthy
 
   end
 
