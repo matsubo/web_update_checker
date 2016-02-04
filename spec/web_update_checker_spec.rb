@@ -20,13 +20,6 @@ describe WebUpdateChecker do
     mail.delivery_method :smtp, {
       address:   'localhost',
       port:      25,
-
-      #      address:   'smtp.gmail.com',
-      #      port:      587,
-      #      user_name: '<TODO>',
-      #      password:  '<TODO>',
-      #      authentication: 'plain',
-      #      enable_starttls_auto: true
     }
 
   end
@@ -36,21 +29,29 @@ describe WebUpdateChecker do
     expect(WebUpdateChecker::VERSION).to_not be_nil
   end
 
-  it 'should initialize temporary file' do
-    expect(WebUpdateChecker::Checker.new(url).execute).to be_nil
-  end
+  context 'first and second' do
+    it 'should initialize temporary file' do
+      VCR.use_cassette 'http/hogehoge' do
+        expect(WebUpdateChecker::Checker.new(url).execute).to be_nil
+      end
+    end
 
 
-  it 'should be return as same contents' do
-    expect(WebUpdateChecker::Checker.new(url).execute).to be_falsey
+    it 'should be return as same contents' do
+      VCR.use_cassette 'http/hogehoge' do
+        expect(WebUpdateChecker::Checker.new(url).execute).to be_falsey
+      end
+    end
   end
 
 
   it 'should be return as different contents' do
 
-    url = 'http://www.yahoo.co.jp/'
-    expect(WebUpdateChecker::Checker.new(url).execute).to be_falsey
-    expect(WebUpdateChecker::Checker.new(url).execute).to be_truthy
+    VCR.use_cassette 'http/yahoo' do
+      url = 'http://www.yahoo.co.jp/'
+      expect(WebUpdateChecker::Checker.new(url).execute).to be_falsey
+      expect(WebUpdateChecker::Checker.new(url).execute).to be_truthy
+    end
 
   end
 
