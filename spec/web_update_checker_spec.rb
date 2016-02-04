@@ -2,72 +2,64 @@ require 'spec_helper'
 
 describe WebUpdateChecker do
 
-  before(:all) do
-    @url = 'http://example.com/'
-    WebUpdateChecker::Checker.new(@url).cleanup
+  let(:url) { 'http://example.com/' }
+  let(:regex) { /<h1>(.*)<\/h1>/ }
+
+  before do
+    WebUpdateChecker::Checker.new(url).cleanup
   end
 
-  before(:each) do
-
-    @regex = /<h1>(.*)<\/h1>/
-
-    @mail = Mail.new do
+  let(:mail) do
+    mail = Mail.new do
       from    'TODO@example.com'
       to      'TODO@example.com'
       subject 'Web site is updated!'
-      body     @url
+      body     url
     end
 
-    @mail.delivery_method :smtp, {
+    mail.delivery_method :smtp, {
       address:   'localhost',
       port:      25,
-
-#      address:   'smtp.gmail.com',
-#      port:      587,
-#      user_name: '<TODO>',
-#      password:  '<TODO>',
-#      authentication: 'plain',
-#      enable_starttls_auto: true
     }
 
-
-
   end
+
 
   it 'should have a version number' do
-    WebUpdateChecker::VERSION.should_not be_nil
+    expect(WebUpdateChecker::VERSION).to_not be_nil
   end
 
-  it 'should initialize temporary file' do
+  context 'first and second' do
+    it 'should initialize temporary file' do
+      VCR.use_cassette 'http/hogehoge' do
+        expect(WebUpdateChecker::Checker.new(url).execute).to be_nil
+      end
+    end
 
-    WebUpdateChecker::Checker.new(@url).execute.should be_nil
 
-  end
-
-
-  it 'should be return as same contents' do
-
-    WebUpdateChecker::Checker.new(@url).execute.should be_falsey
-
+    it 'should be return as same contents' do
+      VCR.use_cassette 'http/hogehoge' do
+        expect(WebUpdateChecker::Checker.new(url).execute).to be_falsey
+      end
+    end
   end
 
 
   it 'should be return as different contents' do
 
-    url = 'http://www.yahoo.co.jp/'
-    WebUpdateChecker::Checker.new(url).execute.should be_truthy
+    VCR.use_cassette 'http/yahoo' do
+      url = 'http://www.yahoo.co.jp/'
+      expect(WebUpdateChecker::Checker.new(url).execute).to be_falsey
+      expect(WebUpdateChecker::Checker.new(url).execute).to be_truthy
+    end
 
   end
 
-
-#  it 'should be send a notification mail' do
-#
-#    WebUpdateChecker::Checker.new(@url, @regex, @mail).execute.should be_true
-#
-#  end
-#
-
-  after(:all) do
-  end
+  #  it 'should be send a notification mail' do
+  #
+  #    WebUpdateChecker::Checker.new(url, regex, mail).execute.should be_true
+  #
+  #  end
+  #
 
 end
