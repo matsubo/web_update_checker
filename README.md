@@ -26,19 +26,22 @@ Or install it yourself as:
 
 main.rb
 ```
+require 'mail'
+require 'web_update_checker'
+
 regex = /<h1>(.*)<\/h1>/
 url = 'http://example.com/'
 
 mail = Mail.new do
-  from:    'TODO@example.com',
-  to:      'TODO@example.com',
-  subject: 'Web site is updated!',
-  body:     url,
+  from:    'TODO@example.com'
+  to:      'TODO@example.com'
+  subject: 'Web site is updated!'
+  body:     url
 end
 
 mail.delivery_method :smtp, {
-address:   'localhost',
-             port:      25,
+  address:   'localhost',
+  port:      25,
 }
 
 WebUpdateChecker::Checker.new(url, regex, mail).execute
